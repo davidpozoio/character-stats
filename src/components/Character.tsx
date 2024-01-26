@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, Fragment, useState } from "react";
 
 const Character = () => {
   const [character, setCharacter] = useState({
@@ -25,17 +25,18 @@ const Character = () => {
       onChange={handleChange}
       style={{ display: "flex", flexDirection: "column", gap: "10px" }}
     >
-      <label htmlFor="Iname">name: </label>
-      <input type="text" name="name" id="Iname" />
-
-      <label htmlFor="Iintelligence">intelligence:</label>
-      <input type="number" name="intelligence" id="Iintelligence" />
-
-      <label htmlFor="Istrength">strength:</label>
-      <input type="number" name="strength" id="Istrength" />
-
-      <label htmlFor="Icharisma">Charisma: </label>
-      <input type="number" name="charisma" id="Icharisma" />
+      {Object.entries(character).map(([name, value], index) => {
+        return (
+          <Fragment key={index}>
+            <label htmlFor={`I${name}`}>{name}: </label>
+            {typeof value === "number" ? (
+              <input type="number" name={name} id={`I${name}`} />
+            ) : (
+              <input type="string" name={name} id={`I${name}`} />
+            )}
+          </Fragment>
+        );
+      })}
     </form>
   );
 };
